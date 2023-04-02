@@ -27,6 +27,7 @@ pipeline {
                  withCredentials([usernamePassword(credentialsId: 'dockerCredential', passwordVariable: 'dockerPass', usernameVariable: 'dockerUser')]) {
                    sh "docker login -u ${dockerUser} -p ${dockerPass}"
                }
+            }
               
         }
 
