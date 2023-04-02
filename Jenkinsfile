@@ -7,7 +7,7 @@ pipeline {
                 sh "mvn clean compile"
             }
         }
-      
+
         stage('deploy') { 
             steps {
                 sh "mvn package"
@@ -24,13 +24,10 @@ pipeline {
         stage('Docker Login'){
             
             steps {
-                withCredentials([usernameColonPassword(credentialsId: 'dockerId', variable: 'docker')]) {
-                     sh "docker login -u pradyumnakhadanga1979 -p ${docker}"
-                }
-             //    withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
-               //     sh "docker login -u pradyumnakhadanga1979 -p ${Dockerpwd}"
-                //}
-            }                
+                 withCredentials([usernamePassword(credentialsId: 'dockerCredential', passwordVariable: 'dockerPass', usernameVariable: 'dockerUser')]) {
+                   sh "docker login -u ${dockerUser} -p ${dockerPass}"
+               }
+              
         }
 
         stage('Docker Push'){
@@ -41,7 +38,7 @@ pipeline {
         
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p 8081:8080 pradyumnakhadanga1979/springboot-docker:${BUILD_NUMBER}'
+                sh 'docker run -itd -p 8081:8080 pradyumnakhadanga1979/springboot-docker:${BUILD_NUMBE
             }
         }
 
