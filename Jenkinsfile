@@ -38,7 +38,7 @@ pipeline {
         
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p 8082:8080 pradyumnakhadanga1979/springboot-docker:${BUILD_NUMBER}'
+                sh 'docker container run -p 8081:8081 pradyumnakhadanga1979/springboot-docker:${BUILD_NUMBER}'
             }
         }
 
